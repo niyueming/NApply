@@ -27,6 +27,7 @@ import net.nym.napply.library.recycler.BaseRecyclerAdapter;
 import net.nym.napply.library.recycler.RecyclerViewLinearDivider;
 import net.nym.napply.library.recycler.SimpleAnimator;
 import net.nym.napply.adapter.SimpleAdapter;
+import net.nym.napply.library.utils.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Log.setDebug(true);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
         info = new SimpleInfo();
         info.setName(FollowAppBarBehaviorActivity.class.getSimpleName());
         info.setClazz(FollowAppBarBehaviorActivity.class);
+        mData.add(info);
+        info = new SimpleInfo();
+        info.setName(FrescoSampleActivity.class.getSimpleName());
+        info.setClazz(FrescoSampleActivity.class);
+        mData.add(info);
+        info = new SimpleInfo();
+        info.setName(FrescoListSampleActivity.class.getSimpleName());
+        info.setClazz(FrescoListSampleActivity.class);
         mData.add(info);
         info = new SimpleInfo();
         info.setName("");

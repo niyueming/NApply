@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016  Ni YueMing<niyueming@163.com>
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+  ~
+  -->
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    >
+<android.support.design.widget.AppBarLayout
+    android:id="@+id/appBarLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.AppBarOverlay">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+</android.support.design.widget.AppBarLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000000"
+        >
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/my_image_view"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            fresco:fadeDuration="300"
+            fresco:actualImageScaleType="focusCrop"
+            fresco:placeholderImage="@android:color/holo_red_dark"
+            fresco:placeholderImageScaleType="fitCenter"
+            fresco:failureImage="@android:color/black"
+            fresco:failureImageScaleType="centerInside"
+            fresco:retryImage="@android:color/holo_blue_bright"
+            fresco:retryImageScaleType="centerCrop"
+            fresco:progressBarImage="@android:color/holo_purple"
+            fresco:progressBarImageScaleType="centerInside"
+            fresco:backgroundImage="@android:color/holo_green_dark"
+            fresco:overlayImage="@android:color/transparent"
+            fresco:pressedStateOverlayImage="@android:color/holo_red_dark"
+            fresco:roundAsCircle="false"
+            fresco:roundedCornerRadius="10dp"
+            fresco:roundTopLeft="true"
+            fresco:roundTopRight="false"
+            fresco:roundBottomLeft="false"
+            fresco:roundBottomRight="true"
+            fresco:roundWithOverlayColor="@android:color/white"
+            fresco:roundingBorderWidth="2dp"
+            fresco:roundingBorderColor="@android:color/black"
+            />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/gifImage"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            fresco:fadeDuration="300"
+            fresco:actualImageScaleType="focusCrop"
+            fresco:placeholderImage="@android:color/holo_red_dark"
+            fresco:placeholderImageScaleType="fitCenter"
+            fresco:failureImage="@android:color/black"
+            fresco:failureImageScaleType="centerInside"
+            fresco:retryImage="@android:color/holo_blue_bright"
+            fresco:retryImageScaleType="centerCrop"
+            fresco:progressBarImage="@android:color/holo_purple"
+            fresco:progressBarImageScaleType="centerInside"
+            fresco:progressBarAutoRotateInterval="1000"
+            fresco:backgroundImage="@android:color/holo_green_dark"
+            fresco:overlayImage="@android:color/transparent"
+            fresco:pressedStateOverlayImage="@android:color/holo_red_dark"
+            fresco:roundAsCircle="false"
+            fresco:roundedCornerRadius="10dp"
+            fresco:roundTopLeft="true"
+            fresco:roundTopRight="false"
+            fresco:roundBottomLeft="false"
+            fresco:roundBottomRight="true"
+            fresco:roundWithOverlayColor="@android:color/white"
+            fresco:roundingBorderWidth="2dp"
+            fresco:roundingBorderColor="@android:color/black"
+            />
+    </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>

@@ -12,11 +12,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.nym.napply">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:name="net.nym.napply.library.common.NApplication"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".MainActivity"
@@ -36,6 +39,16 @@
             />
         <activity
             android:name=".FollowAppBarBehaviorActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".FrescoSampleActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".FrescoListSampleActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             />
