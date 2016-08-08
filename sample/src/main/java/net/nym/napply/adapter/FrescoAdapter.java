@@ -12,17 +12,28 @@
 package net.nym.napply.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.facebook.imagepipeline.image.QualityInfo;
 
 import net.nym.napply.R;
 import net.nym.napply.entity.ImageVo;
+import net.nym.napply.library.common.FrescoImageLoader;
 import net.nym.napply.library.recycler.BaseRecyclerAdapter;
+import net.nym.napply.library.utils.ContextUtils;
+import net.nym.napply.library.utils.Log;
 
 import java.util.List;
 
@@ -39,14 +50,28 @@ public class FrescoAdapter extends BaseRecyclerAdapter<FrescoAdapter.ViewHolder,
     }
 
     @Override
-    protected void bindData(ViewHolder holder, ImageVo item) {
-        holder.image.setImageURI(item.getUrl());
+    protected void bindData(final ViewHolder holder, ImageVo item) {
+//        holder.image.setImageURI(item.getUrl());
+
+        FrescoImageLoader.getInstance().setController(holder.image
+                ,item.getUrl()
+                ,FrescoImageLoader.getViewSizeControllerListener(holder.image
+                        ,ContextUtils.getMetrics(mContext).widthPixels/2));
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_fresco, parent, false);
         return new ViewHolder(view);
+    }
+
+    void updateViewSize(@NonNull SimpleDraweeView draweeView, @Nullable ImageInfo imageInfo) {
+        if (imageInfo != null) {
+//            draweeView.getLayoutParams().width = imageInfo.getWidth();
+            draweeView.getLayoutParams().width = ContextUtils.getMetrics(mContext).widthPixels/2;
+            draweeView.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            draweeView.setAspectRatio((float) imageInfo.getWidth() / imageInfo.getHeight());
+        }
     }
 
     protected class ViewHolder extends BaseRecyclerAdapter.ViewHolder {

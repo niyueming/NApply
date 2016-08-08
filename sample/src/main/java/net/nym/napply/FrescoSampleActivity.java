@@ -33,6 +33,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.image.QualityInfo;
 
+import net.nym.napply.library.common.FrescoImageLoader;
 import net.nym.napply.library.utils.Log;
 
 /**
@@ -50,7 +51,8 @@ public class FrescoSampleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SimpleDraweeView simpleDraweeView = (SimpleDraweeView) findViewById(R.id.my_image_view);
-        simpleDraweeView.setImageURI("http://image.39.net/104/5/663072_1.jpg");
+        FrescoImageLoader.getInstance().setImageURI(simpleDraweeView,"http://image.39.net/104/5/663072_1.jpg");
+//        simpleDraweeView.setImageURI("http://image.39.net/104/5/663072_1.jpg");
 //        DraweeController controller = Fresco.newDraweeControllerBuilder()
 //                .setUri("http://image.39.net/104/5/663072_1.jpg")
 //                .setOldController(simpleDraweeView.getController())
@@ -81,34 +83,56 @@ public class FrescoSampleActivity extends AppCompatActivity {
 
         SimpleDraweeView gifDraweeView = (SimpleDraweeView) findViewById(R.id.gifImage);
 //        simpleDraweeView.setImageURI("http://image.39.net/104/5/663072_1.jpg");
-        DraweeController gifController = Fresco.newDraweeControllerBuilder()
-                .setUri("res:///" + R.mipmap.gif)
-                .setOldController(gifDraweeView.getController())
-                .setAutoPlayAnimations(true)
-                .setControllerListener(new BaseControllerListener<ImageInfo>(){
-                    @Override
-                    public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
-                        if (imageInfo == null) {
-                            return;
-                        }
-                        QualityInfo qualityInfo = imageInfo.getQualityInfo();
-                        Log.i("Final image received! " +
-                                        "Size %d x %d" +
-                                        "Quality level %d, good enough: %s, full quality: %s",
-                                imageInfo.getWidth(),
-                                imageInfo.getHeight(),
-                                qualityInfo.getQuality(),
-                                qualityInfo.isOfGoodEnoughQuality(),
-                                qualityInfo.isOfFullQuality());
-                    }
+//        DraweeController gifController = Fresco.newDraweeControllerBuilder()
+//                .setUri("res:///" + R.mipmap.gif)
+//                .setOldController(gifDraweeView.getController())
+//                .setAutoPlayAnimations(true)
+//                .setControllerListener(new BaseControllerListener<ImageInfo>(){
+//                    @Override
+//                    public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+//                        if (imageInfo == null) {
+//                            return;
+//                        }
+//                        QualityInfo qualityInfo = imageInfo.getQualityInfo();
+//                        Log.i("Final image received! " +
+//                                        "Size %d x %d" +
+//                                        "Quality level %d, good enough: %s, full quality: %s",
+//                                imageInfo.getWidth(),
+//                                imageInfo.getHeight(),
+//                                qualityInfo.getQuality(),
+//                                qualityInfo.isOfGoodEnoughQuality(),
+//                                qualityInfo.isOfFullQuality());
+//                    }
+//
+//                    @Override
+//                    public void onFailure(String id, Throwable throwable) {
+//                        super.onFailure(id, throwable);
+//                    }
+//                })
+//                .build();
+//        gifDraweeView.setController(gifController);
+        FrescoImageLoader.getInstance().setController(gifDraweeView,"res:///" + R.mipmap.gif,new BaseControllerListener<ImageInfo>(){
+            @Override
+            public void onFinalImageSet(String id, ImageInfo imageInfo, Animatable animatable) {
+                if (imageInfo == null) {
+                    return;
+                }
+                QualityInfo qualityInfo = imageInfo.getQualityInfo();
+                Log.i("Final image received! " +
+                                "Size %d x %d" +
+                                "Quality level %d, good enough: %s, full quality: %s",
+                        imageInfo.getWidth(),
+                        imageInfo.getHeight(),
+                        qualityInfo.getQuality(),
+                        qualityInfo.isOfGoodEnoughQuality(),
+                        qualityInfo.isOfFullQuality());
+            }
 
-                    @Override
-                    public void onFailure(String id, Throwable throwable) {
-                        super.onFailure(id, throwable);
-                    }
-                })
-                .build();
-        gifDraweeView.setController(gifController);
+            @Override
+            public void onFailure(String id, Throwable throwable) {
+                super.onFailure(id, throwable);
+            }
+        });
 
     }
 
