@@ -12,6 +12,7 @@
 package net.nym.napply.library.common;
 
 import android.app.Application;
+import android.content.res.Resources;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
@@ -25,11 +26,23 @@ import okhttp3.OkHttpClient;
  * @time 14:46
  */
 public class NApplication extends Application {
-
+    private static NApplication instance;
     @Override
     public void onCreate() {
         super.onCreate();
-        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory.newBuilder(this,new OkHttpClient()).build();
-        Fresco.initialize(this,config);
+        FrescoImageLoader.frescoInitialize(this);
+        instance = this;
     }
+
+    /**
+     * @return the main context of the Application
+     */
+    public static NApplication getAppContext() {
+        return instance;
+    }
+
+    public static Resources getAppResources(){
+        return instance.getResources();
+    }
+
 }

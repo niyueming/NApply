@@ -11,6 +11,7 @@
 
 package net.nym.napply.library.common;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
@@ -25,9 +26,13 @@ import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+
+import okhttp3.OkHttpClient;
 
 
 /**
@@ -39,7 +44,11 @@ public class FrescoImageLoader {
     private static final String TAG = FrescoImageLoader.class.getSimpleName();
     private static FrescoImageLoader frescoImageLoader;
     private FrescoImageLoader(){
-        ;
+    }
+
+    public static void frescoInitialize(Context context){
+        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory.newBuilder(context,new OkHttpClient()).build();
+        Fresco.initialize(context,config);
     }
 
     public static FrescoImageLoader getInstance(){
