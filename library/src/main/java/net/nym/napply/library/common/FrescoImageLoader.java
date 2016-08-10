@@ -174,6 +174,7 @@ public class FrescoImageLoader {
     private GenericDraweeHierarchyBuilder initGenericDraweeHierarchyBuilder(Resources resources){
         return new GenericDraweeHierarchyBuilder(resources)
                 .setFadeDuration(300)
+//                .setProgressBarImage()    //进度条
                 ;
     }
 }

@@ -42,7 +42,9 @@ public class FollowAppBarBehavior extends CoordinatorLayout.Behavior<View> {
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
 
         float scale = child.getHeight()*1f/dependency.getHeight();
-        float translationY = Math.abs(dependency.getTop() - mStatusBarHeight ) * scale;//获取更随布局的顶部位置
+        float distance = Math.min(dependency.getHeight(),Math.abs(dependency.getTop() - mStatusBarHeight ));
+
+        float translationY = distance * scale;//获取更随布局的顶部位置
 
 
         child.setTranslationY(translationY);

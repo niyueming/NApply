@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         info.setClazz(FollowAppBarBehaviorActivity.class);
         mData.add(info);
         info = new SimpleInfo();
+        info.setName(HeadScrollSampleActivity.class.getSimpleName());
+        info.setClazz(HeadScrollSampleActivity.class);
+        mData.add(info);
+        info = new SimpleInfo();
         info.setName(FrescoSampleActivity.class.getSimpleName());
         info.setClazz(FrescoSampleActivity.class);
         mData.add(info);

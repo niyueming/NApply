@@ -52,6 +52,11 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             />
+        <activity
+            android:name=".HeadScrollSampleActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>
