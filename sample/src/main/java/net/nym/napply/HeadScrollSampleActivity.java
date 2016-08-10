@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 未完成
+ * 未完成，（{@link android.support.design.widget.AppBarLayout.Behavior},{@link android.support.design.widget.AppBarLayout.ScrollingViewBehavior}）
  * @author niyueming
  * @date 2016-08-10
  * @time 10:29
