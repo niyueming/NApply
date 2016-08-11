@@ -57,6 +57,11 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             />
+        <activity
+            android:name=".OkHttpRequestSampleActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

@@ -80,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
         info.setClazz(FrescoListSampleActivity.class);
         mData.add(info);
         info = new SimpleInfo();
+        info.setName(OkHttpRequestSampleActivity.class.getSimpleName());
+        info.setClazz(OkHttpRequestSampleActivity.class);
+        mData.add(info);
+        info = new SimpleInfo();
         info.setName("");
         mData.add(info);
 
