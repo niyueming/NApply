@@ -9,16 +9,21 @@
  *
  */
 
-package net.nym.napply.library.https;
+package net.nym.napply.library.common;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * @author niyueming
- * @date 2016-08-10
- * @time 14:22
+ * @date 2016-08-11
+ * @time 10:23
  */
-public  interface  IRequest<C extends ICallback> {
+public class NBaseActivity extends AppCompatActivity {
 
-    boolean cancel();
-    void execute();
-    void enqueue(C callback);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 }

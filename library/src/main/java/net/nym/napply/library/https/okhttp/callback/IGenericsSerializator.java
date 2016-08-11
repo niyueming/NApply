@@ -9,16 +9,11 @@
  *
  */
 
-package net.nym.napply.library.https;
+package net.nym.napply.library.https.okhttp.callback;
 
 /**
- * @author niyueming
- * @date 2016-08-10
- * @time 14:22
+ * Created by JimGong on 2016/6/23.
  */
-public  interface  IRequest<C extends ICallback> {
-
-    boolean cancel();
-    void execute();
-    void enqueue(C callback);
+public interface IGenericsSerializator {
+    <T> T transform(String response, Class<T> classOfT);
 }

@@ -13,12 +13,8 @@ package net.nym.napply.library.https;
 
 /**
  * @author niyueming
- * @date 2016-08-10
- * @time 14:22
+ * @date 2016-08-11
+ * @time 17:12
  */
-public  interface  IRequest<C extends ICallback> {
-
-    boolean cancel();
-    void execute();
-    void enqueue(C callback);
+public interface ICallback {
 }

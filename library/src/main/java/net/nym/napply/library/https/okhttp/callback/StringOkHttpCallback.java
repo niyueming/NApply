@@ -9,16 +9,20 @@
  *
  */
 
-package net.nym.napply.library.https;
+package net.nym.napply.library.https.okhttp.callback;
+
+import java.io.IOException;
+
+import okhttp3.Response;
 
 /**
- * @author niyueming
- * @date 2016-08-10
- * @time 14:22
+ * Created by zhy on 15/12/14.
  */
-public  interface  IRequest<C extends ICallback> {
-
-    boolean cancel();
-    void execute();
-    void enqueue(C callback);
+public abstract class StringOkHttpCallback extends OkHttpCallback<String>
+{
+    @Override
+    public String parseNetworkResponse(Response response, int id) throws IOException
+    {
+        return response.body().string();
+    }
 }

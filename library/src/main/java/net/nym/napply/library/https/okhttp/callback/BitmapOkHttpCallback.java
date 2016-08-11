@@ -9,16 +9,22 @@
  *
  */
 
-package net.nym.napply.library.https;
+package net.nym.napply.library.https.okhttp.callback;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import okhttp3.Response;
 
 /**
- * @author niyueming
- * @date 2016-08-10
- * @time 14:22
+ * Created by zhy on 15/12/14.
  */
-public  interface  IRequest<C extends ICallback> {
+public abstract class BitmapOkHttpCallback extends OkHttpCallback<Bitmap>
+{
+    @Override
+    public Bitmap parseNetworkResponse(Response response , int id) throws Exception
+    {
+        return BitmapFactory.decodeStream(response.body().byteStream());
+    }
 
-    boolean cancel();
-    void execute();
-    void enqueue(C callback);
 }
