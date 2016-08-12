@@ -14,20 +14,16 @@ package net.nym.napply;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import net.nym.napply.adapter.SimpleAdapter;
-import net.nym.napply.library.entity.SimpleInfo;
+import net.nym.napply.entity.Age;
 import net.nym.napply.library.https.okhttp.OkHttpClientManager;
 import net.nym.napply.library.https.okhttp.OkHttpRequest;
+import net.nym.napply.library.https.okhttp.callback.ListFastJsonOkHttpCallback;
 import net.nym.napply.library.https.okhttp.callback.StringOkHttpCallback;
-import net.nym.napply.library.recycler.RecyclerViewLinearDivider;
-import net.nym.napply.library.recycler.SimpleAnimator;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -61,5 +57,7 @@ public class OkHttpRequestSampleActivity extends AppCompatActivity {
                         text.setText(response);
                     }
                 });
+
     }
+
 }

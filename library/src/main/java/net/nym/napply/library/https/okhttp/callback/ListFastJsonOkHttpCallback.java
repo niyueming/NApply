@@ -9,29 +9,27 @@
  *
  */
 
-package net.nym.napply.library.common;
+package net.nym.napply.library.https.okhttp.callback;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import com.alibaba.fastjson.JSON;
 
-import net.nym.napply.library.https.okhttp.OkHttpClientManager;
+import java.lang.reflect.ParameterizedType;
+import java.util.List;
+
+import okhttp3.Response;
 
 /**
  * @author niyueming
- * @date 2016-08-11
- * @time 10:23
+ * @date 2016-08-12
+ * @time 09:43
  */
-public class NBaseActivity extends AppCompatActivity {
+public abstract class ListFastJsonOkHttpCallback<T> extends OkHttpCallback<List<T>> {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public  List<T> parseNetworkResponse(Response response, int id) throws Exception {
+        String string = response.body().string();
+        Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 
-    @Override
-    protected void onDestroy() {
-        OkHttpClientManager.cancelByTag(this);
-        super.onDestroy();
+        return JSON.parseArray(string,entityClass);
     }
 }

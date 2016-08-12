@@ -45,4 +45,9 @@ public class NApplication extends Application {
         return instance.getResources();
     }
 
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
+
 }

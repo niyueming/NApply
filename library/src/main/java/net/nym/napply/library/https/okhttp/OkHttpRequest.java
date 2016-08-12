@@ -34,7 +34,7 @@ public class OkHttpRequest implements IRequest<OkHttpCallback>{
     private OkHttpClientManager mManager;
 
     public OkHttpRequest(Context context){
-        mManager = OkHttpClientManager.getInstance(context);
+        mManager = OkHttpClientManager.newInstance(context);
         mManager.newBuilder();
     }
 

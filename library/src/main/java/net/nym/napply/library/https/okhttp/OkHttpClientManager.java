@@ -51,7 +51,6 @@ import okhttp3.Response;
  * @time 14:24
  */
 public class OkHttpClientManager {
-    private static OkHttpClientManager instance;
     private volatile static OkHttpClient mOkHttpClient;
     private final static long MAX_CACHE_SIZE = 50 * 1024 * 1024 * 8;
     private final static int CONNECT_TIMEOUT = 60;  //秒
@@ -73,15 +72,8 @@ public class OkHttpClientManager {
         }
     }
 
-    public static OkHttpClientManager getInstance(Context context) {
-        if (instance == null) {
-            synchronized (OkHttpClientManager.class) {
-                if (instance == null) {
-                    instance = new OkHttpClientManager(context);
-                }
-            }
-        }
-        return instance;
+    public static OkHttpClientManager newInstance(Context context) {
+        return new OkHttpClientManager(context);
     }
 
     private void initHttpClient(Context context){
@@ -107,6 +99,9 @@ public class OkHttpClientManager {
     public OkHttpClientManager newBuilder(){
         mBuilder = new Request.Builder();
         mMethod = METHOD.GET;
+        params = new LinkedHashMap<>();
+        files = new ArrayList<>();
+        url = null;
         return this;
     }
 
@@ -177,6 +172,48 @@ public class OkHttpClientManager {
     }
 
 
+    private void build() {
+        checkBuilder();
+        checkUrl();
+        switch (mMethod){
+            case GET:
+                mBuilder.url(appendParams(url,params)).get();
+                break;
+            case POST:
+                //Form形式
+                RequestBody formBody;
+                if (files == null || files.isEmpty())
+                {
+                    FormBody.Builder builder = new FormBody.Builder();
+                    addParams(builder);
+                    formBody = builder.build();
+                } else
+                {
+                    MultipartBody.Builder builder = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM);
+                    addParams(builder);
+
+                    for (int i = 0; i < files.size(); i++)
+                    {
+                        FileInput fileInput = files.get(i);
+                        RequestBody fileBody = RequestBody.create(MediaType.parse(guessMimeType(fileInput.filename)), fileInput.file);
+                        builder.addFormDataPart(fileInput.key, fileInput.filename, fileBody);
+                    }
+                    formBody = builder.build();
+                }
+                mBuilder.url(url).post(formBody);
+                //TODO raw形式
+                /**
+                * ({@link OkHttpClientManager#MEDIA_TYPE_PLAIN},{@link OkHttpClientManager#MEDIA_TYPE_STREAM})
+                */
+
+                break;
+            case HEAD:
+                mBuilder.url(appendParams(url,params)).head();
+                break;
+        }
+    }
+
     public Call execute(){
         checkBuilder();
         checkUrl();
@@ -233,48 +270,6 @@ public class OkHttpClientManager {
             }
         });
         return requestCall;
-    }
-
-    private void build() {
-        checkBuilder();
-        checkUrl();
-        switch (mMethod){
-            case GET:
-                mBuilder.url(appendParams(url,params)).get();
-                break;
-            case POST:
-                //Form形式
-                RequestBody formBody;
-                if (files == null || files.isEmpty())
-                {
-                    FormBody.Builder builder = new FormBody.Builder();
-                    addParams(builder);
-                    formBody = builder.build();
-                } else
-                {
-                    MultipartBody.Builder builder = new MultipartBody.Builder()
-                            .setType(MultipartBody.FORM);
-                    addParams(builder);
-
-                    for (int i = 0; i < files.size(); i++)
-                    {
-                        FileInput fileInput = files.get(i);
-                        RequestBody fileBody = RequestBody.create(MediaType.parse(guessMimeType(fileInput.filename)), fileInput.file);
-                        builder.addFormDataPart(fileInput.key, fileInput.filename, fileBody);
-                    }
-                    formBody = builder.build();
-                }
-                mBuilder.url(url).post(formBody);
-                //TODO raw形式
-                /**
-                * ({@link OkHttpClientManager#MEDIA_TYPE_PLAIN},{@link OkHttpClientManager#MEDIA_TYPE_STREAM})
-                */
-
-                break;
-            case HEAD:
-                mBuilder.url(appendParams(url,params)).head();
-                break;
-        }
     }
 
 
@@ -387,7 +382,7 @@ public class OkHttpClientManager {
         }
     }
 
-    public void cancelByTag(Object tag) {
+    public static void cancelByTag(Object tag) {
         for (Call call : mOkHttpClient.dispatcher().queuedCalls()) {
             if (tag.equals(call.request().tag())) {
                 call.cancel();
@@ -398,6 +393,11 @@ public class OkHttpClientManager {
                 call.cancel();
             }
         }
+    }
+
+
+    public static void cancelAll() {
+        mOkHttpClient.dispatcher().cancelAll();
     }
 
     public static class FileInput
