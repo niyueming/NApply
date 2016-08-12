@@ -12,6 +12,7 @@
 package net.nym.napply.library.recycler;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -82,6 +83,10 @@ public abstract class BaseRecyclerAdapter<VH extends BaseRecyclerAdapter.ViewHol
         }
 
         protected abstract void bindView(View itemView);
+
+        protected  <T extends View> void findViewById(View parent, @IdRes int id,T view){
+            view = (T) parent.findViewById(id);
+        }
     }
 
     public class FootViewHolder extends RecyclerView.ViewHolder{

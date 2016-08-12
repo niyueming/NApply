@@ -12,9 +12,12 @@
 package net.nym.napply.library.common;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
+import net.nym.napply.library.R;
 import net.nym.napply.library.https.okhttp.OkHttpClientManager;
 
 /**
@@ -33,5 +36,9 @@ public class NBaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         OkHttpClientManager.cancelByTag(this);
         super.onDestroy();
+    }
+
+    public <T extends View> void findViewById(T view,@IdRes int id) {
+         view = (T)findViewById(id);
     }
 }
