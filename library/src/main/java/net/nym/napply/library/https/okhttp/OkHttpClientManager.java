@@ -172,7 +172,7 @@ public class OkHttpClientManager {
     }
 
 
-    private void build() {
+    private void build(final OkHttpCallback... callbacks) {
         checkBuilder();
         checkUrl();
         switch (mMethod){
@@ -200,6 +200,25 @@ public class OkHttpClientManager {
                         builder.addFormDataPart(fileInput.key, fileInput.filename, fileBody);
                     }
                     formBody = builder.build();
+                }
+                if (callbacks != null){
+                    formBody = new CountingRequestBody(formBody, new CountingRequestBody.Listener() {
+                        @Override
+                        public void onRequestProgress(final long bytesWritten,final long contentLength) {
+                            mPlatform.execute(new Runnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    for (int i = 0 ;i < callbacks.length;i++){
+                                        callbacks[i].inProgress(bytesWritten * 1.0f / contentLength,contentLength,REQUEST_ID);
+                                    }
+
+                                }
+                            });
+
+                        }
+                    });
                 }
                 mBuilder.url(url).post(formBody);
                 //TODO raw形式
@@ -229,7 +248,7 @@ public class OkHttpClientManager {
     }
 
     public Call enqueue(OkHttpCallback okHttpCallback){
-        build();
+        build(okHttpCallback);
         if (okHttpCallback == null){
             okHttpCallback = OkHttpCallback.okHttpCallbackDefault;
         }
