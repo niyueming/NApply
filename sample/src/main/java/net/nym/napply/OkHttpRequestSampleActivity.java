@@ -17,15 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import net.nym.napply.entity.Age;
-import net.nym.napply.library.https.okhttp.OkHttpClientManager;
-import net.nym.napply.library.https.okhttp.OkHttpRequest;
-import net.nym.napply.library.https.okhttp.callback.ListFastJsonOkHttpCallback;
-import net.nym.napply.library.https.okhttp.callback.StringOkHttpCallback;
+import net.nym.napply.http.RxOkHttpRequestUtils;
+import net.nym.napply.library.utils.Log;
 
-import java.util.List;
-
-import okhttp3.Call;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * @author niyueming
@@ -42,19 +38,40 @@ public class OkHttpRequestSampleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         text = (TextView) findViewById(R.id.text);
-        new OkHttpRequest(this)
-                .url("http://www.baidu.com")
-                .tag(this)
-                .method(OkHttpClientManager.METHOD.GET)
-                .enqueue(new StringOkHttpCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
+//        new OkHttpRequest(this)
+//                .url("http://www.baidu.com")
+//                .tag(this)
+//                .method(OkHttpClientManager.METHOD.GET)
+//                .enqueue(new StringOkHttpCallback() {
+//                    @Override
+//                    public void onError(Call call, Exception e, int id) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onResponse(String response, int id) {
+//                        text.setText(response);
+//                    }
+//                });
 
+        //RxJava例子
+        RxOkHttpRequestUtils.test(this)
+//                .flatMap()    //变换，比如多接口顺序调用
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.e("onCompleted");
                     }
 
                     @Override
-                    public void onResponse(String response, int id) {
-                        text.setText(response);
+                    public void onError(Throwable e) {
+                        Log.e(e.toString());
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        text.setText(s);
                     }
                 });
 

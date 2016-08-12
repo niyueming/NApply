@@ -22,16 +22,17 @@ import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Headers;
+import okhttp3.Response;
 
 /**
  * @author niyueming
  * @date 2016-08-10
  * @time 14:21
  */
-public class OkHttpRequest implements IRequest<OkHttpCallback>{
-    private Call mCall;
+public class OkHttpRequest implements IRequest<OkHttpCallback, Response>{
 
     private OkHttpClientManager mManager;
+    private Object tag;
 
     public OkHttpRequest(Context context){
         mManager = OkHttpClientManager.newInstance(context);
@@ -59,6 +60,7 @@ public class OkHttpRequest implements IRequest<OkHttpCallback>{
     }
 
     public OkHttpRequest tag(@NonNull Object tag){
+        this.tag = tag;
         mManager.tag(tag);
         return this;
     }
@@ -86,21 +88,17 @@ public class OkHttpRequest implements IRequest<OkHttpCallback>{
     }
 
     @Override
-    public boolean cancel() {
-        if (mCall != null){
-            mCall.cancel();
-            return true;
-        }
-        return false;
+    public void cancel() {
+        OkHttpClientManager.cancelByTag(tag);
     }
 
     @Override
-    public void execute() {
-        mCall = mManager.execute();
+    public Response execute() {
+        return mManager.execute();
     }
 
     @Override
     public void enqueue(OkHttpCallback okHttpCallback) {
-        mCall = mManager.enqueue(okHttpCallback);
+        mManager.enqueue(okHttpCallback);
     }
 }

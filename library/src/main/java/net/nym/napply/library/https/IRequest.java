@@ -16,9 +16,9 @@ package net.nym.napply.library.https;
  * @date 2016-08-10
  * @time 14:22
  */
-public  interface  IRequest<C extends ICallback> {
+public  interface  IRequest<C extends ICallback,R> {
 
-    boolean cancel();
-    void execute();
+    void cancel();
+    R execute();
     void enqueue(C callback);
 }

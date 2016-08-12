@@ -233,21 +233,22 @@ public class OkHttpClientManager {
         }
     }
 
-    public Call execute(){
+    public Response execute(){
         checkBuilder();
         checkUrl();
         build();
+        Response response = null;
         Call requestCall = mOkHttpClient.newCall(mBuilder.build());
         try {
-            requestCall.execute();
+            response = requestCall.execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return requestCall;
+        return response;
     }
 
-    public Call enqueue(OkHttpCallback okHttpCallback){
+    public void enqueue(OkHttpCallback okHttpCallback){
         build(okHttpCallback);
         if (okHttpCallback == null){
             okHttpCallback = OkHttpCallback.okHttpCallbackDefault;
@@ -288,7 +289,6 @@ public class OkHttpClientManager {
                 }
             }
         });
-        return requestCall;
     }
 
 
