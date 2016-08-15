@@ -20,8 +20,11 @@ import android.widget.TextView;
 import net.nym.napply.http.RxOkHttpRequestUtils;
 import net.nym.napply.library.utils.Log;
 
+import java.util.concurrent.TimeUnit;
+
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.subjects.PublishSubject;
 
 /**
  * @author niyueming
@@ -57,6 +60,8 @@ public class OkHttpRequestSampleActivity extends AppCompatActivity {
         //RxJava例子
         RxOkHttpRequestUtils.test(this)
 //                .flatMap()    //变换，比如多接口顺序调用
+                .throttleFirst(500, TimeUnit.MILLISECONDS)  //去抖动
+//                .compose()    //组合变换
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
                     @Override

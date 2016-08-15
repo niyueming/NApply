@@ -9,7 +9,7 @@
  *
  */
 
-package net.nym.napply.library.https.okhttp.callback;
+package net.nym.napply.library.https;
 
 /**
  * Created by JimGong on 2016/6/23.

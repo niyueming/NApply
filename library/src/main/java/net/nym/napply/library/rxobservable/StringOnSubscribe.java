@@ -9,20 +9,17 @@
  *
  */
 
-package net.nym.napply.library.https.okhttp.callback;
+package net.nym.napply.library.rxobservable;
 
-import com.alibaba.fastjson.JSON;
+import net.nym.napply.library.https.okhttp.callback.FastJsonGenericsSerializator;
 
-import net.nym.napply.library.https.IGenericsSerializator;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * @author niyueming
- * @date 2016-08-11
- * @time 18:18
+ * @date 2016-08-15
+ * @time 11:00
  */
-public class FastJsonGenericsSerializator implements IGenericsSerializator {
-    @Override
-    public <T> T transform(String response, Class<T> classOfT) {
-        return JSON.parseObject(response,classOfT);
-    }
+public abstract class StringOnSubscribe implements Observable.OnSubscribe<String> {
 }

@@ -9,35 +9,30 @@
  *
  */
 
-package net.nym.napply.library.https.okhttp.callback;
+package net.nym.napply.library.rxobservable;
 
-import net.nym.napply.library.https.IGenericsSerializator;
+import net.nym.napply.library.https.okhttp.callback.FastJsonGenericsSerializator;
 
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 
 import okhttp3.Response;
+import rx.Observable;
 
 /**
- * Created by JimGong on 2016/6/23.
+ * @author niyueming
+ * @date 2016-08-15
+ * @time 11:09
  */
+public abstract class VOOnSubscribe<T> extends FastJsonGenericsSerializator implements Observable.OnSubscribe<T> {
 
-public abstract class GenericsOkHttpCallback<T> extends OkHttpCallback<T> {
-    IGenericsSerializator mGenericsSerializator;
 
-    public GenericsOkHttpCallback(IGenericsSerializator serializator) {
-        mGenericsSerializator = serializator;
-    }
-
-    @Override
-    public T parseNetworkResponse(Response response, int id) throws IOException {
-        String string = response.body().string();
+    public T parseNetworkResponse(String string) {
         Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         if (entityClass == String.class) {
             return (T) string;
         }
-        T bean = mGenericsSerializator.transform(string, entityClass);
+        T bean = transform(string, entityClass);
         return bean;
     }
-
 }

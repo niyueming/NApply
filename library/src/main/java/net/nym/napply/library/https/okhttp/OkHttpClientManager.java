@@ -52,7 +52,7 @@ import okhttp3.Response;
  */
 public class OkHttpClientManager {
     private volatile static OkHttpClient mOkHttpClient;
-    private final static long MAX_CACHE_SIZE = 50 * 1024 * 1024 * 8;
+    private final static long MAX_CACHE_SIZE = 50 * 1024 * 1024;
     private final static int CONNECT_TIMEOUT = 60;  //秒
     private final static int READ_TIMEOUT = 60;  //秒
     private final static int WRITE_TIMEOUT = 60;  //秒
