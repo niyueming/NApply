@@ -51,6 +51,10 @@ public class FrescoImageLoader {
         Fresco.initialize(context,config);
     }
 
+    public static void shutDown(){
+        Fresco.shutDown();
+    }
+
     public static FrescoImageLoader getInstance(){
         if (frescoImageLoader == null){
             synchronized (FrescoImageLoader.class){

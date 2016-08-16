@@ -11,4 +11,10 @@
 
 <resources>
     <string name="app_name">Library</string>
+
+    <string name="napply_hint">提示</string>
+    <string name="napply_cancel">取消</string>
+    <string name="napply_conform">确定</string>
+    <string name="napply_allow">允许</string>
+    <string name="napply_toSet">去设置</string>
 </resources>

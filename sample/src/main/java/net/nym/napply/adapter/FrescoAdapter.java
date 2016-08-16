@@ -83,7 +83,7 @@ public class FrescoAdapter extends BaseRecyclerAdapter<FrescoAdapter.ViewHolder,
 
         @Override
         protected void bindView(View itemView) {
-            findViewById(itemView,R.id.image,image);
+            findViewById(itemView,image,R.id.image);
         }
 
     }
