@@ -140,6 +140,11 @@ public class NBaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected Dialog onCreateDialog(int id) {
+        return super.onCreateDialog(id);
+    }
+
+    @Override
     protected void onDestroy() {
         OkHttpClientManager.cancelByTag(this);
         super.onDestroy();
