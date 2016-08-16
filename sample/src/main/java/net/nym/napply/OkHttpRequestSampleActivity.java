@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import net.nym.napply.http.RxOkHttpRequestUtils;
@@ -39,6 +40,7 @@ public class OkHttpRequestSampleActivity extends AppCompatActivity {
         setContentView(R.layout.okhttp_request_sample_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         text = (TextView) findViewById(R.id.text);
 //        new OkHttpRequest(this)
@@ -80,6 +82,16 @@ public class OkHttpRequestSampleActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

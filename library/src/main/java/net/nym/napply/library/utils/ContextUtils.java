@@ -19,6 +19,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -185,6 +187,11 @@ public class ContextUtils {
         androidId = "" + Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());
         return deviceUuid.toString() ;
+    }
+
+    public static   <T extends View> T findViewById(@NonNull View parent, @IdRes int id){
+        View view = parent.findViewById(id);
+        return view == null ? null : (T)view;
     }
 
     /**

@@ -85,10 +85,6 @@ public abstract class BaseRecyclerAdapter<VH extends BaseRecyclerAdapter.ViewHol
         }
 
         protected abstract void bindView(View itemView);
-
-        protected  <T extends View> void findViewById(@NonNull View parent, @Nullable T view, @IdRes int id){
-            view = (T) parent.findViewById(id);
-        }
     }
 
     public class FootViewHolder extends RecyclerView.ViewHolder{

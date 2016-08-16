@@ -29,6 +29,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
@@ -145,13 +146,19 @@ public class NBaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        ActivityCompat.finishAfterTransition(this);
+    }
+
+    @Override
     protected void onDestroy() {
         OkHttpClientManager.cancelByTag(this);
         super.onDestroy();
     }
 
-    public <T extends View> void findViewById(T view,@IdRes int id) {
-         view = (T)findViewById(id);
+    public <T extends View> T findView(@IdRes int id) {
+         View view = (T)super.findViewById(id);
+        return view == null ? null : (T)view;
     }
 
     @Override

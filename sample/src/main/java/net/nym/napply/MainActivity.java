@@ -12,14 +12,25 @@
 package net.nym.napply;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.ContextCompatApi24;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Scene;
+import android.transition.Transition;
+import android.transition.TransitionValues;
 import android.view.View;
+import android.view.Window;
 
 
 import net.nym.napply.library.entity.SimpleInfo;
@@ -27,6 +38,7 @@ import net.nym.napply.library.recycler.BaseRecyclerAdapter;
 import net.nym.napply.library.recycler.RecyclerViewLinearDivider;
 import net.nym.napply.library.recycler.SimpleAnimator;
 import net.nym.napply.adapter.SimpleAdapter;
+import net.nym.napply.library.utils.ContextUtils;
 import net.nym.napply.library.utils.Log;
 
 import java.util.ArrayList;
@@ -39,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -84,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
         info.setClazz(OkHttpRequestSampleActivity.class);
         mData.add(info);
         info = new SimpleInfo();
+        info.setName(SceneTransitionAnimationActivity.class.getSimpleName());
+        info.setClazz(SceneTransitionAnimationActivity.class);
+        mData.add(info);
+        info = new SimpleInfo();
         info.setName("");
         mData.add(info);
 
@@ -98,8 +115,20 @@ public class MainActivity extends AppCompatActivity {
 //                info.setName("add");
 //                mData.add(position,info);
 //                mAdapter.notifyItemInserted(position);
+                SimpleInfo info = mData.get(position);
+                if (info.getName().equals(SceneTransitionAnimationActivity.class.getSimpleName())){
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this
+                            ,new Pair<View, String>(view.findViewById(R.id.text),"text")
+                            );
+                    ActivityCompat.startActivity(MainActivity.this
+                            ,new Intent(MainActivity.this,info.getClazz())
+                                    .putExtra("name",info.getName())
+                            ,optionsCompat.toBundle());
+                }else {
 
-                startActivity(new Intent(MainActivity.this,mData.get(position).getClazz()));
+                    startActivity(new Intent(MainActivity.this,info.getClazz()));
+                }
+
 
             }
         });
