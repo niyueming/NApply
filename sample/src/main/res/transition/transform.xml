@@ -11,10 +11,13 @@
   -->
 
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
-    <changeBounds />
-    <changeClipBounds />
-    <changeImageTransform />
-    <changeScroll />
-    <changeTransform />
+    <changeBounds
+        android:duration="1000"
+        android:interpolator="@android:interpolator/bounce"
+        />
+    <!--<changeClipBounds />-->
+    <!--<changeImageTransform />-->
+    <!--<changeScroll />-->
+    <!--<changeTransform />-->
 
 </transitionSet>

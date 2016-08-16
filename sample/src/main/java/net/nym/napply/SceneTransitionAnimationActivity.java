@@ -20,6 +20,8 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.transition.Transition;
 import android.view.MenuItem;
 import android.view.Window;
@@ -63,10 +65,12 @@ public class SceneTransitionAnimationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 //        if (ContextUtils.isLollipopOrLater()){
 //            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-//            getWindow().setEnterTransition(new Explode());
-//            getWindow().setExitTransition(new Explode());
-//            getWindow().setSharedElementEnterTransition(new Explode());
-//            getWindow().setSharedElementExitTransition(new Explode());
+//            getWindow().setEnterTransition(new Fade());
+//            getWindow().setExitTransition(new Fade());
+//            getWindow().setReturnTransition(new Fade());
+//            getWindow().setSharedElementEnterTransition(new Fade());
+//            getWindow().setSharedElementExitTransition(new Fade());
+//            getWindow().setSharedElementReturnTransition(new Fade());
 //        }
         setContentView(R.layout.scene_transition_animation_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,7 +81,6 @@ public class SceneTransitionAnimationActivity extends AppCompatActivity {
         text = (TextView) findViewById(R.id.text);
         text.setText(getIntent().getStringExtra("name"));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            text.setAlpha(0f);
             getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
                 @Override
                 public void onTransitionStart(Transition transition) {
@@ -86,7 +89,6 @@ public class SceneTransitionAnimationActivity extends AppCompatActivity {
 
                 @Override
                 public void onTransitionEnd(Transition transition) {
-                    text.animate().setDuration(1000).alpha(1f);
                     Log.e("onTransitionEnd");
                 }
 
@@ -105,6 +107,7 @@ public class SceneTransitionAnimationActivity extends AppCompatActivity {
                     Log.e("onTransitionResume");
                 }
             });
+
         }
 
     }

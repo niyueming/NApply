@@ -47,7 +47,4 @@
         android:background="@android:color/holo_red_dark"
         />
 
-
-
-
 </android.support.design.widget.CoordinatorLayout>

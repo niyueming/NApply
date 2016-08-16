@@ -25,11 +25,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.ChangeTransform;
 import android.transition.Explode;
+import android.transition.Fade;
 import android.transition.Scene;
+import android.transition.Slide;
 import android.transition.Transition;
+import android.transition.TransitionSet;
 import android.transition.TransitionValues;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 
 
@@ -51,14 +56,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+//        if (ContextUtils.isLollipopOrLater()){
+//            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+//        }
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Log.setDebug(true);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,8 +124,11 @@ public class MainActivity extends AppCompatActivity {
 //                mAdapter.notifyItemInserted(position);
                 SimpleInfo info = mData.get(position);
                 if (info.getName().equals(SceneTransitionAnimationActivity.class.getSimpleName())){
+//                    if (ContextUtils.isLollipopOrLater()){
+//                        getWindow().setExitTransition(new Fade());
+//                    }
                     ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this
-                            ,new Pair<View, String>(view.findViewById(R.id.text),"text")
+                            ,new Pair<View, String>(view.findViewById(R.id.text),"test")
                             );
                     ActivityCompat.startActivity(MainActivity.this
                             ,new Intent(MainActivity.this,info.getClazz())
