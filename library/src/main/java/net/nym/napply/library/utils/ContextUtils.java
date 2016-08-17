@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +26,7 @@ import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
@@ -120,6 +122,11 @@ public class ContextUtils {
                 Build.VERSION_CODES.N;
     }
 
+    public static boolean hasExternalStorage() {
+        return Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED);
+    }
+
     /**
      * @return 状态栏高度或0
      */
@@ -133,9 +140,26 @@ public class ContextUtils {
         return result;
     }
 
-    public static boolean hasExternalStorage() {
-        return Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED);
+    /**
+     * 获取状态栏高度
+     *
+     */
+    public static int getStatusBarHeight(Activity activity){
+        Rect rectangle= new Rect();
+        Window window= activity.getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
+        return rectangle.top;
+    }
+
+    /**
+    * @param id 比如R.attr.actionBarSize等
+    *
+    * */
+    public static float getFloatTypeValue(Context context,@IdRes int id){
+        TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute(id, typedValue, true);
+        float value = typedValue.getDimension(ContextUtils.getMetrics(context));
+        return value;
     }
 
     public static int getVersionCode(Context ctx) {
