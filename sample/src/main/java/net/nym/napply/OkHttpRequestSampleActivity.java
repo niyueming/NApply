@@ -62,8 +62,11 @@ public class OkHttpRequestSampleActivity extends AppCompatActivity {
         //RxJava例子
         RxOkHttpRequestUtils.test(this)
 //                .flatMap()    //变换，比如多接口顺序调用
-                .throttleFirst(500, TimeUnit.MILLISECONDS)  //去抖动
+//                .throttleFirst(500, TimeUnit.MILLISECONDS)  //
 //                .compose()    //组合变换
+//                .filter()     //过滤
+//                .distinct()     //去重
+//                .distinctUntilChanged()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
                     @Override
