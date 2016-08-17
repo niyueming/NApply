@@ -402,6 +402,9 @@ public class OkHttpClientManager {
     }
 
     public static void cancelByTag(Object tag) {
+        if (mOkHttpClient == null){
+            return;
+        }
         for (Call call : mOkHttpClient.dispatcher().queuedCalls()) {
             if (tag.equals(call.request().tag())) {
                 call.cancel();
@@ -416,6 +419,9 @@ public class OkHttpClientManager {
 
 
     public static void cancelAll() {
+        if (mOkHttpClient == null){
+            return;
+        }
         mOkHttpClient.dispatcher().cancelAll();
     }
 
