@@ -11,7 +11,10 @@
 
 package net.nym.napply.library.common;
 
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * @author niyueming
@@ -20,6 +23,7 @@ import android.support.v4.app.Fragment;
  */
 public class NBaseFragment extends Fragment {
 
+    protected ViewGroup mContainer;
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -35,6 +39,14 @@ public class NBaseFragment extends Fragment {
     }
 
 
+    public <T extends View> T findViewById(@IdRes int id){
+        if (mContainer == null){
+            return null;
+        }
+
+        View view = mContainer.findViewById(id);
+        return view == null ? null : (T)view;
+    }
     /**
      * 可见
      */
