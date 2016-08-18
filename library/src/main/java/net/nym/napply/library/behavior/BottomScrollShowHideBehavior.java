@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.animation.DecelerateInterpolator;
 
 /**
@@ -26,8 +27,10 @@ import android.view.animation.DecelerateInterpolator;
 public class BottomScrollShowHideBehavior extends CoordinatorLayout.Behavior<View> {
 
     private boolean isAnimate;//动画是否在进行
+    private int mTouchSlop;
     public BottomScrollShowHideBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
     @Override
@@ -42,9 +45,9 @@ public class BottomScrollShowHideBehavior extends CoordinatorLayout.Behavior<Vie
             return;
         }
         //dy大于0是向上滚动 小于0是向下滚动
-        if (dy >= 5  && child.getVisibility() == View.VISIBLE) {
+        if (dy >= mTouchSlop  && child.getVisibility() == View.VISIBLE) {
             hide(child);
-        } else if (dy < -5 && child.getVisibility() == View.GONE) {
+        } else if (dy < -mTouchSlop && child.getVisibility() == View.GONE) {
             show(child);
         }
     }
