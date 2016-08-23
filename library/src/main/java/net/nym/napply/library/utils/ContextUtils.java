@@ -13,12 +13,15 @@ package net.nym.napply.library.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -160,6 +163,23 @@ public class ContextUtils {
         context.getTheme().resolveAttribute(id, typedValue, true);
         float value = typedValue.getDimension(ContextUtils.getMetrics(context));
         return value;
+    }
+
+    /**
+     * 休眠模式白名单
+     *
+     * */
+    public static void setIgnoringBatteryOptimizations(Context context){
+        if(isMarshmallowOrLater()) {
+            String packageName = context.getPackageName();
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                Intent intent = new Intent();
+                intent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                intent.setData(Uri.parse("package:" + packageName));
+                context.startActivity(intent);
+            }
+        }
     }
 
     public static int getVersionCode(Context ctx) {
