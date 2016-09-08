@@ -13,10 +13,12 @@ package net.nym.napply;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import net.nym.napply.adapter.SimpleAdapter;
 import net.nym.napply.library.entity.SimpleInfo;
@@ -43,6 +45,7 @@ public class HeadScrollSampleActivity extends AppCompatActivity {
         setContentView(R.layout.head_scroll_sample_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -60,5 +63,17 @@ public class HeadScrollSampleActivity extends AppCompatActivity {
 
         mAdapter = new SimpleAdapter(this,mData);
         mRecyclerView.setAdapter(mAdapter);
+//        NestedScrollView scrollView = (NestedScrollView) findViewById(R.id.scrollView);
+//        scrollView.setNestedScrollingEnabled(false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
