@@ -16,6 +16,7 @@ import android.content.Context;
 import net.nym.napply.library.https.okhttp.OkHttpRequest;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import okhttp3.Response;
 import rx.Observable;
@@ -49,7 +50,7 @@ public class RxOkHttpRequestUtils {
                        subscriber.onError(e);
                    }
                }else {
-                   subscriber.onError(new Throwable("response is fail"));
+                   subscriber.onError(new Throwable(String.format(Locale.getDefault(),"response is fail,code=%d",response.code())));
                }
            }
        }).subscribeOn(Schedulers.io());

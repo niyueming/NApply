@@ -27,6 +27,25 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+//        debug {
+//            buildConfigField "String", "API_baseURL", "\"http://test.com:8080\""    //定义BuildConfig的变量,可在java中调用
+//            buildConfigField "String", "App_Name", "\"com.test\""
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            debuggable true
+//        }
+//        debug_ReleaseHost.initWith(android.buildTypes.debug)
+//        debug_ReleaseHost {
+//            applicationIdSuffix "._FormalHost"    //包名后缀
+//            buildConfigField "String", "API_baseURL", "\"http://sso.test.com/\""
+//            debuggable true
+//        }
+//        release {
+//            buildConfigField "String", "API_baseURL", "\"http://sso.test.com/\""
+//            buildConfigField "String", "App_Name", "\"com.test\""
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
     }
 }
 

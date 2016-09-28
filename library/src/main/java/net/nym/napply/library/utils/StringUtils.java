@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 
 /**
  * @author nym
@@ -236,5 +237,9 @@ public class StringUtils {
             e.printStackTrace();
         }
         return sb.toString();
+    }
+
+    public static String format(String format,Object... args){
+        return String.format(Locale.getDefault(),format,args);
     }
 }
