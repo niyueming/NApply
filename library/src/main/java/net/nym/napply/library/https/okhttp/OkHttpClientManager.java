@@ -15,6 +15,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import net.nym.napply.library.BuildConfig;
 import net.nym.napply.library.cookie.CookieJarImpl;
 import net.nym.napply.library.cookie.store.PersistentCookieStore;
 import net.nym.napply.library.https.okhttp.callback.OkHttpCallback;
@@ -77,9 +78,26 @@ public class OkHttpClientManager {
     }
 
     private void initHttpClient(Context context){
-        //        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null,null,null);
-        mOkHttpClient = new OkHttpClient().newBuilder()
-                .addInterceptor(new LoggerInterceptor("NApply", true))
+//        //        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null,null,null);
+//        mOkHttpClient = new OkHttpClient().newBuilder()
+//                .addInterceptor(new LoggerInterceptor("NApply", true))
+//                .cookieJar(new CookieJarImpl(new PersistentCookieStore(context)))   //cookie缓存
+//                .cache(new Cache(context.getCacheDir(), MAX_CACHE_SIZE))
+////                .certificatePinner(CertificatePinner.DEFAULT) //证书锁定
+//                .connectionPool(new ConnectionPool(5, 5, TimeUnit.MINUTES))
+////                .connectionSpecs()    //TLS ;代理？
+//                .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+////                .dispatcher(new Dispatcher())
+////                .followRedirects(true)    //重定向，默认true
+////                .followSslRedirects(true) //follow redirects from HTTPS to HTTP and from HTTP to HTTPS.默认true
+//                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+////                .retryOnConnectionFailure()
+//                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+////                .sslSocketFactory(sslParams.sSLSocketFactory) //自定义https证书
+//                .build();
+
+        OkHttpClient.Builder builder = new OkHttpClient().newBuilder()
+//                .addInterceptor(new LoggerInterceptor("NApply", true))
                 .cookieJar(new CookieJarImpl(new PersistentCookieStore(context)))   //cookie缓存
                 .cache(new Cache(context.getCacheDir(), MAX_CACHE_SIZE))
 //                .certificatePinner(CertificatePinner.DEFAULT) //证书锁定
@@ -93,7 +111,12 @@ public class OkHttpClientManager {
 //                .retryOnConnectionFailure()
                 .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
 //                .sslSocketFactory(sslParams.sSLSocketFactory) //自定义https证书
-                .build();
+        ;
+        if (BuildConfig.DEBUG){
+            builder.addInterceptor(new LoggerInterceptor("NApply", true));
+        }
+        mOkHttpClient = builder.build();
+
     }
 
     public OkHttpClientManager newBuilder(){
