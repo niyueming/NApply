@@ -11,8 +11,6 @@
 
 package net.nym.napply.library.utils;
 
-import android.support.annotation.NonNull;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,6 +64,25 @@ public class IOUtils {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+
+    public static void close(InputStream in){
+        if (in != null){
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static void close(OutputStream out){
+        if (out != null){
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
