@@ -24,6 +24,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
+
+import net.nym.napply.library.R;
+import net.nym.napply.library.utils.Log;
+
+import java.util.Arrays;
+
 /**
  * @author niyueming
  * @date 2016-08-29
@@ -108,10 +114,10 @@ public class NBasePermissionActivity extends AppCompatActivity {
     private void shouldShowRequestDialog(final @NonNull String[] permissions, final int requestCode, final String permission){
 
         final Dialog dialog = new AlertDialog.Builder(this)
-                .setTitle("提示")
+                .setTitle(R.string.napply_hint)
                 .setMessage(String.format("允许使用%s",permission))
-                .setNegativeButton("取消", null)
-                .setPositiveButton("允许", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.napply_cancel, null)
+                .setPositiveButton(R.string.napply_allow, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ActivityCompat.requestPermissions(NBasePermissionActivity.this, permissions,
@@ -143,8 +149,8 @@ public class NBasePermissionActivity extends AppCompatActivity {
         } else {
 
             // Camera permission has not been granted yet. Request it directly.
-
-            goSet("手机摄像头");
+            ActivityCompat.requestPermissions(this, PERMISSIONS_CAMERA,
+                    REQUEST_CAMERA);
         }
     }
 
@@ -174,7 +180,8 @@ public class NBasePermissionActivity extends AppCompatActivity {
             shouldShowRequestDialog(PERMISSIONS_CONTACT,REQUEST_CONTACTS,"通讯录");
 
         } else {
-            goSet("通讯录");
+            ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACT,
+                    REQUEST_CONTACTS);
         }
     }
 
@@ -203,7 +210,8 @@ public class NBasePermissionActivity extends AppCompatActivity {
 
         } else {
 
-            goSet("日历");
+            ActivityCompat.requestPermissions(this, PERMISSIONS_CALENDAR,
+                    REQUEST_CALENDAR);
         }
     }
 
@@ -231,7 +239,8 @@ public class NBasePermissionActivity extends AppCompatActivity {
             shouldShowRequestDialog(PERMISSIONS_LOCATION,REQUEST_LOCATION,"地理位置信息");
 
         } else {
-            goSet("地理位置信息");
+            ActivityCompat.requestPermissions(this, PERMISSIONS_LOCATION,
+                    REQUEST_LOCATION);
         }
     }
 
@@ -259,7 +268,8 @@ public class NBasePermissionActivity extends AppCompatActivity {
             shouldShowRequestDialog(PERMISSIONS_STORAGE,REQUEST_STORAGE,"存储空间");
 
         } else {
-            goSet("存储空间");
+            ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE,
+                    REQUEST_STORAGE);
         }
     }
 
@@ -285,7 +295,8 @@ public class NBasePermissionActivity extends AppCompatActivity {
             shouldShowRequestDialog(PERMISSIONS_MICROPHONE,REQUEST_MICROPHONE,"麦克风");
 
         } else {
-            goSet("麦克风");
+            ActivityCompat.requestPermissions(this, PERMISSIONS_MICROPHONE,
+                    REQUEST_MICROPHONE);
         }
     }
 
@@ -312,7 +323,8 @@ public class NBasePermissionActivity extends AppCompatActivity {
             shouldShowRequestDialog(PERMISSIONS_SENSORS,REQUEST_SENSORS,"身体传感器");
 
         } else {
-            goSet("身体传感器");
+            ActivityCompat.requestPermissions(this, PERMISSIONS_SENSORS,
+                    REQUEST_SENSORS);
         }
     }
 
@@ -350,7 +362,8 @@ public class NBasePermissionActivity extends AppCompatActivity {
             shouldShowRequestDialog(PERMISSIONS_PHONE,REQUEST_PHONE,"电话");
 
         } else {
-            goSet("电话");
+            ActivityCompat.requestPermissions(this, PERMISSIONS_PHONE,
+                    REQUEST_PHONE);
         }
     }
 
@@ -388,7 +401,8 @@ public class NBasePermissionActivity extends AppCompatActivity {
             shouldShowRequestDialog(PERMISSIONS_SMS,REQUEST_SMS,"短信");
 
         } else {
-            goSet("短信");
+            ActivityCompat.requestPermissions(this, PERMISSIONS_SMS,
+                    REQUEST_SMS);
         }
     }
 
@@ -419,7 +433,8 @@ public class NBasePermissionActivity extends AppCompatActivity {
             shouldShowRequestDialog(PERMISSIONS_CAMERA_AND_STORAGE,REQUEST_CAMERA_AND_STORAGE,"手机相机和存储空间");
 
         } else {
-            goSet("手机相机和存储空间");
+            ActivityCompat.requestPermissions(this, PERMISSIONS_CAMERA_AND_STORAGE,
+                    REQUEST_CAMERA_AND_STORAGE);
         }
     }
 
@@ -472,7 +487,7 @@ public class NBasePermissionActivity extends AppCompatActivity {
         } else {
 
 //                    Log.i(TAG, "CAMERA permission was NOT granted.");
-//            Log.i("获取权限%s失败", Arrays.toString(permissions));
+            Log.i("获取权限%s失败", Arrays.toString(permissions));
             String permission = "";
             switch (requestCode) {
                 case REQUEST_CAMERA:
@@ -510,28 +525,24 @@ public class NBasePermissionActivity extends AppCompatActivity {
                     break;
             }
 
-            goSet(permission);
+            final Dialog dialog = new AlertDialog.Builder(this)
+                    .setTitle(R.string.napply_hint)
+                    .setMessage(String.format("未获得授权使用%s",permission))
+                    .setNegativeButton(R.string.napply_cancel, null)
+                    .setPositiveButton(R.string.napply_toSet, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent();
+                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package",getApplicationInfo().packageName, null);
+                            intent.setData(uri);
+                            startActivity(intent);
+                        }
+                    })
+                    .create();
+            dialog.show();
         }
 
-    }
-
-    private void goSet(String permission) {
-        final Dialog dialog = new AlertDialog.Builder(this)
-                .setTitle("提示")
-                .setMessage(String.format("未获得授权使用%s",permission))
-                .setNegativeButton("取消", null)
-                .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent();
-                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package",getApplicationInfo().packageName, null);
-                        intent.setData(uri);
-                        startActivity(intent);
-                    }
-                })
-                .create();
-        dialog.show();
     }
 
 
@@ -556,4 +567,3 @@ public class NBasePermissionActivity extends AppCompatActivity {
         return true;
     }
 }
-
