@@ -296,7 +296,7 @@ public class OkHttpClientManager {
 
                     if (!finalOkHttpCallback.validateReponse(response, REQUEST_ID))
                     {
-                        sendFailResultCallback(call, new IOException("request failed , reponse's code is : " + response.code()), finalOkHttpCallback, REQUEST_ID);
+                        sendFailResultCallback(call, new IOException("request failed , response's code is : " + response.code()), finalOkHttpCallback, REQUEST_ID);
                         return;
                     }
 
@@ -313,8 +313,6 @@ public class OkHttpClientManager {
             }
         });
     }
-
-
 
     public static void setOkHttpClient(OkHttpClient okHttpClient){
         mOkHttpClient = okHttpClient;
